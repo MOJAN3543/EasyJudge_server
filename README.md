@@ -21,6 +21,15 @@
  ┣ 📜config.ini
  ┗ 📜requirements.txt
 ```
+## BUILD
+``` shell
+$ docker build -t flask-application:latest .
+```
+## RUN
+``` shell
+$ docker run -p <host portnum>:<container portnum> --memory=<memory> flask-application
+```
+포트 기본 값은 `5000:5000`입니다. memory는 `1g`를 추천합니다. 더 낮은 메모리를 사용할 수 있으나, 코드 채점시 제한 메모리에 걸리지 않음에도 `MLE Error`를 발생시키는 원인이 됩니다.
 ## TODO
 * 현재는 C언어만 컴파일 / 실행 가능하지만 추후에 C++, 자바, 파이썬등 여러 언어를 지원할 예정입니다.
 * 현재는 한번에 한 테스트 케이스만 실행하지만, 한 코드에 대해 여러 테스트 케이스를 처리하는 기능도 고려하고 있습니다.
