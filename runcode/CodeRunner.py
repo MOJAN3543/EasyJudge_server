@@ -43,7 +43,7 @@ def run(stdin: str, limitTime, limitMemory):
     limitMemory = min(limitMemory, int(parser['run']['MAX_MEMORY'])) * 1024 * 1024
 
     stdin_byte = bytes(stdin, "utf-8")
-    child_process = Popen(run_code_cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, preexec_fn=lambda:limit_memory(limitMemory)) # 
+    child_process = Popen(run_code_cmd, shell=True ,stdin=PIPE, stdout=PIPE, stderr=PIPE, preexec_fn=lambda:limit_memory(limitMemory)) # 
     start_time = time.time()
     try:
         (stdout_bstr, stderr_bstr) = child_process.communicate(input=stdin_byte, timeout=limitTime)
@@ -56,9 +56,6 @@ def run(stdin: str, limitTime, limitMemory):
     end_time = time.time()
 
     total_time = end_time - start_time
-
-    if child_process.poll() == -11:
-        raise CustomException.MemoryLimit()
 
     stdout_str = stdout_bstr.decode('utf-8')
     stderr_str = stderr_bstr.decode('utf-8')
