@@ -30,7 +30,7 @@ def compile(code: str): # Only gcc!
 
     err_output = error.decode('utf-8')
     if "error:" in err_output:
-        raise CustomException.ComplieError(err_output)
+        raise CustomException.CompileError(err_output)
 
 def run(stdin: str, limitTime, limitMemory):
     parser = ConfigParser.read()
@@ -43,7 +43,7 @@ def run(stdin: str, limitTime, limitMemory):
     limitMemory = min(limitMemory, int(parser['run']['MAX_MEMORY'])) * 1024 * 1024
 
     stdin_byte = bytes(stdin, "utf-8")
-    child_process = Popen(run_code_cmd, shell=True ,stdin=PIPE, stdout=PIPE, stderr=PIPE, preexec_fn=lambda:limit_memory(limitMemory)) # 
+    child_process = Popen(run_code_cmd, shell=True ,stdin=PIPE, stdout=PIPE, stderr=PIPE, preexec_fn=lambda:limit_memory(limitMemory))
     start_time = time.time()
     try:
         (stdout_bstr, stderr_bstr) = child_process.communicate(input=stdin_byte, timeout=limitTime)

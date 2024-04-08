@@ -4,9 +4,9 @@ class CustomException(Exception):
         self.error_message = error_message
         self.stderr = stderr
     
-class ComplieError(CustomException):
+class CompileError(CustomException):
     def __init__(self, stderr):
-        super().__init__(400, "Complie Error", stderr)
+        super().__init__(400, "Compile Error", stderr)
 
 class exeRuntimeError(CustomException):
     def __init__(self, stderr):
