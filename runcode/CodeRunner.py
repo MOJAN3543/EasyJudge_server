@@ -44,6 +44,7 @@ def run(stdin: str, limitTime, limitMemory):
 
     stdin_byte = bytes(stdin, "utf-8")
     child_process = Popen(run_code_cmd, shell=True ,stdin=PIPE, stdout=PIPE, stderr=PIPE, preexec_fn=lambda:limit_memory(limitMemory))
+
     start_time = time.time()
     try:
         (stdout_bstr, stderr_bstr) = child_process.communicate(input=stdin_byte, timeout=limitTime)

@@ -40,18 +40,22 @@ class JudgePost(Resource):
             CodeRunner.compile(code)
             Checker = FileChecker()
             Checker.getFiles()
-            (stdout, stderr, total_time) = CodeRunner.run(stdin, limitTime, limitMemory)
 
-            for Handler in fileHandlerList:
-                Handler.remove()
+            try:
+                (stdout, stderr, total_time) = CodeRunner.run(stdin, limitTime, limitMemory)
+            finally:
+                for Handler in fileHandlerList:
+                    Handler.remove()
+                newFileList = Checker.getNewFiles()
+                for newFile in newFileList:
+                    Reader = FileReader(newFile)
+                    contents = Reader.read()
+                    FileList.append({"filename": newFile, "contents": contents})
+                    Reader.remove()
+            
 
             FileList = list()
-            newFileList = Checker.getNewFiles()
-            for newFile in newFileList:
-                Reader = FileReader(newFile)
-                contents = Reader.read()
-                FileList.append({"filename": newFile, "contents": contents})
-                Reader.remove()
+
                 
             FileList.sort(key=lambda a: a["filename"])
 
