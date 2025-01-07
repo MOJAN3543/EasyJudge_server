@@ -41,6 +41,8 @@ class JudgePost(Resource):
             Checker = FileChecker()
             Checker.getFiles()
 
+            FileList = list()
+            
             try:
                 (stdout, stderr, total_time) = CodeRunner.run(stdin, limitTime, limitMemory)
             finally:
@@ -52,9 +54,6 @@ class JudgePost(Resource):
                     contents = Reader.read()
                     FileList.append({"filename": newFile, "contents": contents})
                     Reader.remove()
-            
-
-            FileList = list()
 
                 
             FileList.sort(key=lambda a: a["filename"])
